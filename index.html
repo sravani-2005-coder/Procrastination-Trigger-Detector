@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Procrastination Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Procrastination Analytics Dashboard</h1>
+</header>
+
+<div class="dashboard">
+
+    <!-- STATS SECTION -->
+    <div class="stats">
+        <div class="stat-card">
+            <h3>Total Tasks</h3>
+            <p>{{ tasks|length }}</p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TABLE SECTION -->
+        <div class="card table-card">
+            <h2>Task History</h2>
+
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Delay</th>
+                    <th>Risk</th>
+                </tr>
+
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task[1] }}</td>
+                    <td>{{ task[8] }} mins</td>
+                    <td>{{ task[9] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- FORM SECTION (SMALLER) -->
+        <div class="card form-card">
+    <h2>Add Task</h2>
+
+    <form method="POST">
+
+        <label>Subject</label>
+        <input type="text" name="subject" required>
+
+        <label>Task Type</label>
+        <select name="task_type">
+            <option>Theory</option>
+            <option>Problems</option>
+            <option>Coding</option>
+        </select>
+
+        <label>Planned Start Time</label>
+        <input type="time" name="planned_time" required>
+
+        <label>Actual Start Time</label>
+        <input type="time" name="actual_time" required>
+
+        <label>Mood</label>
+        <select name="mood">
+            <option>Good</option>
+            <option>Okay</option>
+            <option>Tired</option>
+        </select>
+
+        <label>Location</label>
+        <select name="location">
+            <option>Home</option>
+            <option>Hostel</option>
+            <option>Library</option>
+        </select>
+
+        <label>Phone Nearby?</label>
+        <select name="phone_nearby">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+
+        <button type="submit">Save</button>
+
+            </form>
+            </div>
+    </div>
+
+</div>
+
+</body>
+</html>
