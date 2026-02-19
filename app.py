@@ -59,30 +59,41 @@ def index():
     conn.close()
 
     tasks = []
+    total_delay = 0
+    high_count = 0
 
     for task in raw_tasks:
         planned = task[3]
         actual = task[4]
 
-        # Convert time to minutes
         p_h, p_m = map(int, planned.split(":"))
         a_h, a_m = map(int, actual.split(":"))
 
         planned_minutes = p_h * 60 + p_m
         actual_minutes = a_h * 60 + a_m
 
-        delay = actual_minutes - planned_minutes
+        delay = max(0, actual_minutes - planned_minutes)
 
         if delay > 20:
             risk = "HIGH 🔴"
+            high_count += 1
         elif delay > 5:
             risk = "MEDIUM 🟡"
         else:
             risk = "LOW 🟢"
 
+        total_delay += delay
         tasks.append(task + (delay, risk))
 
-    return render_template("index.html", tasks=tasks)
+    avg_delay = round(total_delay / len(tasks), 2) if tasks else 0
+    delays = [task[8] for task in tasks]
+    return render_template(
+        "index.html",
+        tasks=tasks,
+        avg_delay=avg_delay,
+        high_count=high_count,
+        delays=delays
+    )
 
 
 if __name__ == "__main__":
