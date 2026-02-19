@@ -14,12 +14,26 @@
 
     <!-- STATS SECTION -->
     <div class="stats">
-        <div class="stat-card">
-            <h3>Total Tasks</h3>
-            <p>{{ tasks|length }}</p>
-        </div>
+    <div class="stat-card">
+        <h3>Total Tasks</h3>
+        <p>{{ tasks|length }}</p>
     </div>
 
+    <div class="stat-card">
+        <h3>High Risk Tasks</h3>
+        <p>{{ high_count }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Avg Delay (mins)</h3>
+        <p>{{ avg_delay }}</p>
+    </div>
+</div>
+<div class="card chart-card">
+    <h2>Delay Graph</h2>
+    <canvas id="delayChart"></canvas>
+</div>
+</div>
     <!-- MAIN CONTENT -->
     <div class="main-content">
 
@@ -93,6 +107,14 @@
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Pass delay data safely -->
+<script id="delay-data" type="application/json">
+    {{ delays|tojson }}
+</script>
+
+<script src="{{ url_for('static', filename='chart.js') }}"></script>
 
 </body>
 </html>
