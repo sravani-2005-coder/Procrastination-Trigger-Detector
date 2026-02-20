@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 
     const delays = JSON.parse(document.getElementById("delay-data").textContent);
@@ -8,25 +7,26 @@ document.addEventListener("DOMContentLoaded", function () {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: delays.map(() => ""), 
+            labels: delays.map(() => ""),
             datasets: [{
                 label: 'Delay (minutes)',
                 data: delays,
-                tension: 0.4,   
+                tension: 0.4,
                 fill: false,
                 borderWidth: 2
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,   
             scales: {
-                x: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0
+                    }
+                }],
+                xAxes: [{
                     display: false
-                },
-                y: {
-                    beginAtZero: true
-                }
+                }]
             }
         }
     });
